@@ -35,7 +35,7 @@ bash 04_run-tutorial.sh
 | --------------------------- | ----------------------------------------------------- |
 | `01_clone-repos.sh`         | Clone `SDK-docker-compose` and required repositories. |
 | `02_setup-ods.sh`           | Start ODS services and run setup scripts.             |
-| `03_config-tutorial-env.sh` | Configure the L3 tutorial environment for localhost.  |
+| `03_config-tutorial-env.sh` | Configure the L3 tutorial environment for localhost. https://github.com/open-dataspaces/L3-identity-component/blob/v1.0.0/docs/tutorials/tutorials.md#2-1-5-事業者クライアントシークレット取得 |
 | `04_run-tutorial.sh`        | Run the L3 tutorial steps. Work in progress.          |
 
 ## Note
