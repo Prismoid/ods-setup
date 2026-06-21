@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-cd -
 cd SDK-docker-compose
 
 docker network create shared-network-ods || true
