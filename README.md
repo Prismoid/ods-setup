@@ -33,7 +33,7 @@ ods-tutorial-setup/
 ├── README.md
 ├── scripts/
 │   ├── 01_clone-repos.sh
-│   ├── 02_setup-ods.sh
+│   ├── 02_setup-od
 │   ├── 03_config-tutorial-env.sh
 │   └── 04_run-tutorial.sh
 ├── docs/

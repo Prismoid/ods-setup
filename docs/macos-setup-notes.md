@@ -17,7 +17,6 @@ brew install grep gnu-sed
 ```bash
 export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
 export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
-hash -r
 ```
 
 ## Intel Mac の場合
@@ -25,7 +24,20 @@ hash -r
 ```bash
 export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-hash -r
+```
+
+### 永続化する場合
+
+毎回 `export PATH=...` を実行しなくてよいように、設定をシェル設定ファイルに追記します。
+
+macOS の標準シェルは `zsh` なので、通常は `~/.zshrc` に追記します。
+
+### Apple Silicon Mac の場合
+
+```bash
+echo 'export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"' >> ~/.zshrc
+echo 'export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
 ```
 
 ## 確認
