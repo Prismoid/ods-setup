@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+cd - 
 cd SDK-docker-compose/L3-identity-component
 cd scripts
 

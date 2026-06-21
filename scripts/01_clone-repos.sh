@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+cd - 
 git clone https://github.com/open-dataspaces/SDK-docker-compose
 cd SDK-docker-compose
 
