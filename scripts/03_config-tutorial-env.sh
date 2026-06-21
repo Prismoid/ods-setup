@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-#!/usr/bin/env bash
-set -euo pipefail
-
 cd SDK-docker-compose/L3-identity-component
 
 ENV_FILE="docs/tutorials/env/tutorials.env"

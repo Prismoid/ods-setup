@@ -1,0 +1,4 @@
+SDK-docker-compose/
+*.bak
+.env
+*.log
