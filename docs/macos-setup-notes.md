@@ -6,10 +6,10 @@ ODS SDK の `./setup/setup_l3.sh` を macOS で実行すると、macOS 標準の
 
 ## 対応方法
 
-GNU grep と GNU sed をインストールする。
+GNU grep と GNU sed と util-linux をインストールする。
 
 ```bash
-brew install grep gnu-sed
+brew install grep gnu-sed util-linux
 ```
 
 ## Apple Silicon Mac の場合
@@ -17,6 +17,7 @@ brew install grep gnu-sed
 ```bash
 export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
 export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+export PATH="/opt/homebrew/opt/util-linux/bin:$PATH"
 ```
 
 ## Intel Mac の場合
@@ -24,6 +25,7 @@ export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 ```bash
 export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/util-linux/libexec/gnubin:$PATH"
 ```
 
 ### 永続化する場合
