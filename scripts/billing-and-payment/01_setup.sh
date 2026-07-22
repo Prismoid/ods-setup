@@ -13,8 +13,3 @@ echo "L3_CLIENT_SECRET: \${L3_CLIENT_SECRET:-${SYSTEM_CLIENT_SECRET}} に更新�
 
 cd ./SDK-docker-compose
 docker compose up payment-app -d
-
-echo "データ提供者・利用者をDBに登録する。簡単のため、同一のIDとする。`uuidgen -t`が動く必要あり"
-PAYMENT_SERVICE_ID=$(uuidgen -t)
-docker exec -it payment-db psql fastapi_db -U postgres -c "INSERT INTO payment_services VALUES ('$PAYMENT_SERVICE_ID', 'test_service', 'http://example.com/')"
-docker exec -it payment-db psql fastapi_db -U postgres -c 'SELECT * FROM payment_services'
