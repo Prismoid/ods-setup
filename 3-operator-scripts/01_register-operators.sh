@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+set -e
+
+read -p "SYSTEM_CLIENT_SECRET を入力(SDK-docker-compose/l3/docker-compose.yml のKEYCLOAK_CREDENTIALS_TOKEN_INTROSPECT_CLIENT_SECRETの設定値): " SYSTEM_CLIENT_SECRET
+
+echo "2-1-1. KeycloackシステムのAPIを呼ぶアクセストークンを取得"
+
+ACCESS_TOKEN=$(curl -s -X POST "http://localhost:8080/auth/token/client" \
+-H "Content-Type: application/json" \
+-H "API-Key: API-Key-Sample" \
+-d '{
+  "client_id": "system-auth-sample",
+  "client_secret": "'$SYSTEM_CLIENT_SECRET'"
+}' | jq -r '.data.access_token')
+
+echo ${ACCESS_TOKEN}
+
+echo
+read -p "OPERATOR用のClient_IDを設定する(任意の文字列で入力可能): " OPERATOR_CLIENT_ID
+
+echo
+echo "2-1-2. 事業者情報の登録を実行"
+
+curl -i -X POST "http://localhost:8080/account/operator" \
+-H "Content-Type: application/json" \
+-H "API-Key: API-Key-Sample" \
+-H "Authorization: Bearer $ACCESS_TOKEN" \
+-d '{
+  "login_user_id": "'${OPERATOR_CLIENT_ID}'-login-id",
+  "operator_name": "サンプル株式会社",
+  "operator_address": "試験県サンプル市examビル1F",
+  "open_operator_id": "1234567890120",
+  "global_operator_id": "123456789TT234567890",
+  "effective_start_date": "2000-01-01",
+  "effective_end_date": "9999-12-31",
+  "create_password_flag": true,
+  "password_temporary_flag": false
+}'
+
+echo
+echo 
+read -p "OPERATOR_ID を入力(UUIDから自動で生成される): " OPERATOR_ID
+
+echo
+echo "2-1-3. 事業者情報の取得"
+
+curl -i -X GET "http://localhost:8080/account/operator/$OPERATOR_ID" \
+-H "Content-Type: application/json" \
+-H "API-Key: API-Key-Sample" \
+-H "Authorization: Bearer $ACCESS_TOKEN"
+
+echo
+echo "2-1-4. 事業者クライアントID発行"
+
+curl -i -X POST "http://localhost:8080/auth/clients" \
+-H "Content-Type: application/json" \
+-H "API-Key: API-Key-Sample" \
+-H "Authorization: Bearer $ACCESS_TOKEN" \
+-d '{
+  "flow_type": "client_credentials",
+  "client_id": "'${OPERATOR_CLIENT_ID}'",
+  "name": "サンプル株式会社クライアントID",
+  "description": "サンプル株式会社クライアントIDZ",
+  "operator_id": "'$OPERATOR_ID'",
+  "open_system_id": "login_user_open_system_id_sample"
+}'
+
+echo
+read -p "OPERATOR_CLIENT_UUID を入力: " OPERATOR_CLIENT_UUID
+
+echo
+echo "2-1-5. 事業者クライアントシークレット取得"
+
+curl -i -X POST "http://localhost:8080/auth/clients/secret/$OPERATOR_CLIENT_UUID" \
+-H "API-Key: API-Key-Sample" \
+-H "Authorization: Bearer $ACCESS_TOKEN"
+
+echo
+read -p "OPERATOR_CLIENT_SECRET を入力: " OPERATOR_CLIENT_SECRET
+
+OUTPUT_FILE="./3-operator-scripts/operator-info/${OPERATOR_CLIENT_ID}.env"
+cat > "$OUTPUT_FILE" <<EOF
+SYSTEM_CLIENT_ID='system-auth-sample'
+SYSTEM_CLIENT_SECRET='$SYSTEM_CLIENT_SECRET'
+OPERATOR_ID='$OPERATOR_ID'
+OPERATOR_PASSWORD='$OPERATOR_PASSWORD'
+OPERATOR_CLIENT_ID='${OPERATOR_CLIENT_ID}'
+OPERATOR_CLIENT_SECRET='$OPERATOR_CLIENT_SECRET'
+EOF
+
+echo
+cat ./1-data-exchange-tutorial/generated-l3-app.env
