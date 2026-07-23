@@ -6,25 +6,22 @@ ODS SDK の `./setup/setup_l3.sh` を macOS で実行すると、macOS 標準の
 
 ## 対応方法
 
-GNU grep と GNU sed をインストールする。
+GNU grep と GNU sed と util-linux をインストールする。
 
 ```bash
-brew install grep gnu-sed
+brew install grep gnu-sed gawk coreutils util-linux
 ```
 
-## Apple Silicon Mac の場合
+## Apple Silicon & Intel Mac、両方に対応
 
 ```bash
-export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
-export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+export PATH="$(brew --prefix grep)/libexec/gnubin:$PATH"
+export PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$PATH"
+export PATH="$(brew --prefix gawk)/libexec/gnubin:$PATH"
+export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+export PATH="$(brew --prefix util-linux)/bin:$PATH"
 ```
 
-## Intel Mac の場合
-
-```bash
-export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
-export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-```
 
 ### 永続化する場合
 
@@ -32,15 +29,18 @@ export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 
 macOS の標準シェルは `zsh` なので、通常は `~/.zshrc` に追記します。
 
-### Apple Silicon Mac の場合
+### Apple Silicon & Intel Mac の両方に対応
 
 ```bash
-echo 'export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"' >> ~/.zshrc
-echo 'export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"' >> ~/.zshrc
+export PATH="$(brew --prefix grep)/libexec/gnubin:$PATH"
+export PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$PATH"
+export PATH="$(brew --prefix gawk)/libexec/gnubin:$PATH"
+export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+export PATH="$(brew --prefix util-linux)/bin:$PATH"
 source ~/.zshrc
 ```
 
-## 確認
+## 確認例
 
 ```bash
 grep --version
