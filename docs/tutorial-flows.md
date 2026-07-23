@@ -1,4 +1,4 @@
-# ODS Setup Flow
+# ODS のチュートリアル流れ
 
 事業者を登録し、Gateway 経由で API を呼び出すまでの流れを示します。
 

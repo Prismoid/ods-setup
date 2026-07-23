@@ -37,70 +37,7 @@ macOS 環境での注意点は、[macOS Setup Notes](macos-setup-notes.md) を�
 
 ## 実行手順
 
-リポジトリのルートディレクトリで、以下のスクリプトを順番に実行します。
-
-```bash
-bash scripts/01_clone-repos.sh
-bash scripts/02_start-containers.sh
-bash scripts/03_setup-l3.sh
-bash scripts/04_setup-l2.sh
-bash scripts/05_run-turorial.sh
-bash scripts/06_run-tutorial2.sh
-bash scripts/07_run-tutorial3.sh
-```
-
-## 各スクリプトの概要
-
-| Script | Description |
-| --- | --- |
-| `01_clone-repos.sh` | `SDK-docker-compose` と ODS 関連リポジトリを clone し、ローカル実行向けに Docker Compose 設定を一部変更します。 |
-| `02_start-containers.sh` | Docker network を作成し、ODS SDK の基本コンテナ群を起動します。 |
-| `03_setup-l3.sh` | Keycloak の `sslRequired` 設定を調整し、L3 Identity Component の初期セットアップと起動を行います。 |
-| `04_setup-l2.sh` | L2 の初期セットアップを行い、Gateway を起動します。 |
-| `05_run-turorial.sh` | system client で管理用アクセストークンを取得し、Operator 登録、Operator client 発行、client secret 取得を行います。 |
-| `06_run-tutorial2.sh` | OpenFGA に endpoint アクセス権限を登録し、Gateway に `/test` の route を追加します。 |
-| `07_run-tutorial3.sh` | Operator client secret でアクセストークンを取得し、Gateway 経由で `/test` API を呼び出します。 |
-
-## 入力する主な値
-
-### `05_run-turorial.sh`
-
-| Value | Description |
-| --- | --- |
-| `SYSTEM_CLIENT_SECRET` | L3 の system client secret です。`SDK-docker-compose/l3/docker-compose.yml` の `KEYCLOAK_CREDENTIALS_TOKEN_INTROSPECT_CLIENT_SECRET` を確認して入力します。 |
-| `OPERATOR_ID` | `/account/operator` で作成された Operator ID を入力します。 |
-| `OPERATOR_PASSWORD` | Operator 登録時に発行された password を入力します。 |
-| `OPERATOR_CLIENT_UUID` | `/auth/clients` で作成された Operator client の UUID を入力します。 |
-| `OPERATOR_CLIENT_SECRET` | `/auth/clients/secret/{client_uuid}` で取得した Operator client secret を入力します。 |
-
-このスクリプトの最後に、以下の値を `generated-l3-app.env` として保存します。
-
-```text
-SYSTEM_CLIENT_SECRET
-ACCESS_TOKEN
-OPERATOR_ID
-OPERATOR_PASSWORD
-OPERATOR_CLIENT_UUID
-OPERATOR_CLIENT_SECRET
-```
-
-### `06_run-tutorial2.sh`
-
-| Value | Description |
-| --- | --- |
-| `FGA_STORE_ID` | `SDK-docker-compose/l2/docker-compose.yml` の `FGA_STORE_ID` を入力します。 |
-| `FGA_MODEL_ID` | `SDK-docker-compose/l2/docker-compose.yml` の `FGA_MODEL_ID` を入力します。 |
-| `OPERATOR_ID` | `05_run-turorial.sh` で取得した Operator ID を入力します。 |
-
-このスクリプトでは、`endpoint:test.post` にアクセスできる group を OpenFGA に登録し、`OPERATOR_ID` をその group の member として登録します。さらに、Gateway に `POST /test` の route を追加します。
-
-### `07_run-tutorial3.sh`
-
-| Value | Description |
-| --- | --- |
-| `OPERATOR_CLIENT_SECRET` | `05_run-turorial.sh` で取得した Operator client secret を入力します。 |
-
-このスクリプトでは、Operator client secret を用いてアクセストークンを取得し、Gateway 経由で `POST /test` を呼び出します。
+(準備中)
 
 ## 処理の流れ
 
